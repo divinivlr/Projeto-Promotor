@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f3f6fb;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-solid: #ffffff;
+  --border: rgba(15, 23, 42, 0.08);
+  --text: #0f172a;
+  --text-2: #475569;
+  --muted: #64748b;
+  --grid: rgba(15, 23, 42, 0.07);
+  color-scheme: light;
+}
+.dark {
+  --bg: #0b1120;
+  --surface: rgba(17, 24, 39, 0.72);
+  --surface-solid: #111827;
+  --border: rgba(148, 163, 184, 0.14);
+  --text: #e5e7eb;
+  --text-2: #cbd5e1;
+  --muted: #94a3b8;
+  --grid: rgba(148, 163, 184, 0.12);
+  color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  background-image:
+    radial-gradient(1200px 600px at 100% -10%, rgba(14, 77, 164, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(242, 140, 40, 0.08), transparent 60%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    @apply rounded-2xl shadow-glass;
+  }
+  .card-title { @apply text-sm font-semibold tracking-tight text-slate-800 dark:text-slate-100; }
+  .card-sub { @apply text-xs text-slate-500 dark:text-slate-400; }
+  .btn { @apply inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
+  .btn-ghost { @apply btn text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10; }
+  .btn-outline { @apply btn border border-slate-300/70 bg-white/60 text-slate-700 hover:bg-white dark:border-slate-600/60 dark:bg-slate-800/50 dark:text-slate-200 dark:hover:bg-slate-800; }
+  .input { @apply w-full rounded-lg border border-slate-300/70 bg-white/80 px-3 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-slate-600/60 dark:bg-slate-900/60 dark:text-slate-100; }
+  .label { @apply mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full border border-brand-200 bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700 dark:border-brand-700/50 dark:bg-brand-900/40 dark:text-brand-200; }
+  .tab { @apply whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10; }
+  .tab-active { @apply bg-brand-600 text-white hover:bg-brand-600 dark:hover:bg-brand-600; }
+  .th { @apply sticky top-0 z-[1] whitespace-nowrap border-b border-slate-200 bg-slate-50/95 px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-400; }
+  .td { @apply border-b border-slate-100 px-3 py-2 align-middle text-[13px] text-slate-700 dark:border-slate-800 dark:text-slate-200; }
+  .num { @apply tabular-nums; }
+}
+
+/* Scrollbar discreto */
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 8px; }
+
+/* ===== Mapa ===== */
+.leaflet-container { font: inherit; background: #e5e7eb; }
+.dark .leaflet-container { background: #1f2937; }
+.dark .leaflet-control-layers, .dark .leaflet-bar a, .dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip {
+  background: #111827; color: #e5e7eb; border-color: #374151;
+}
+.dark .leaflet-control-attribution { background: rgba(17, 24, 39, .75); color: #9ca3af; }
+.dark .leaflet-control-attribution a { color: #93c5fd; }
+.leaflet-popup-content { margin: 12px 14px; min-width: 220px; }
+.leaflet-popup-content-wrapper { border-radius: 12px; }
+
+.pin {
+  --c: #0E4DA4;
+  width: 26px; height: 26px; border-radius: 50% 50% 50% 0;
+  background: var(--c); transform: rotate(-45deg);
+  border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.35);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pin > span { transform: rotate(45deg); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+.pin.dot { width: 14px; height: 14px; border-radius: 50%; transform: none; border-width: 2px; }
+.pin.dot > span { display: none; }
+.pin.dim { opacity: .35; }
+.pin.hl { transform: rotate(-45deg) scale(1.45); box-shadow: 0 0 0 4px rgba(242,140,40,.55), 0 4px 12px rgba(0,0,0,.45); z-index: 1000; }
+.pin.dot.hl { transform: scale(1.6); }
+
+.cluster-badge {
+  width: 38px; height: 38px; border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+  background: rgba(14, 77, 164, .92); color: #fff; font-weight: 700; font-size: 12px;
+  border: 3px solid rgba(255,255,255,.9); box-shadow: 0 2px 10px rgba(0,0,0,.3);
+}
+.cluster-badge.md { width: 44px; height: 44px; background: rgba(10, 53, 119, .94); }
+.cluster-badge.lg { width: 52px; height: 52px; background: rgba(242, 140, 40, .95); }
+.cluster-badge.hl { box-shadow: 0 0 0 5px rgba(242,140,40,.6), 0 2px 10px rgba(0,0,0,.3); }
+
+.centroid-icon { width: 18px; height: 18px; border-radius: 9999px; border: 3px solid #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.4); }
+
+@media print { .no-print { display: none !important; } }
